@@ -104,7 +104,11 @@ when "runit"
 
   service "nginx" do
     supports :status => true, :restart => true, :reload => true
-    reload_command "[[ -f #{node['nginx']['pid']} ]] && kill -HUP `cat #{node['nginx']['pid']}` || true"
+    start_command "sv start nginx"
+    stop_command "sv stop nginx"
+    status_command "sv status nginx"
+    restart_command "sv restart nginx"
+    reload_command "sv hup nginx"
   end
 when "bluepill"
   include_recipe "bluepill"
